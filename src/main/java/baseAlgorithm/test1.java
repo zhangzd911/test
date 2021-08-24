@@ -2,6 +2,8 @@ package baseAlgorithm;
 
 import scala.Int;
 
+import java.util.Arrays;
+
 /**
  * 冒牌排序 O(n2)
  */
@@ -30,10 +32,7 @@ public class test1 {
 
         }
 
-        for (Integer a : arrays) {
-            System.out.println(a);
-        }
-
+        System.out.println(Arrays.toString(arrays));
 
 
     }
