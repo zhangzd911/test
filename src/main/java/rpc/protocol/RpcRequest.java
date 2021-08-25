@@ -5,10 +5,15 @@ package rpc.protocol;
  * 传输请求对象
  */
 
+import rpc.rpcPackage.MyContent;
+import rpc.rpcPackage.MyHeader;
+
 public class RpcRequest {
 
     private String id;
-    private Object data;
+    private MyHeader header;
+    private MyContent content;
+
 
     public String getId() {
         return id;
@@ -18,15 +23,19 @@ public class RpcRequest {
         this.id = id;
     }
 
-    public Object getData() {
-        return data;
+    public MyHeader getHeader() {
+        return header;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setHeader(MyHeader header) {
+        this.header = header;
     }
-    @Override
-    public String toString() {
-        return "RpcRequest{" + "id='" + id + '\'' + ", data=" + data + '}';
+
+    public MyContent getContent() {
+        return content;
+    }
+
+    public void setContent(MyContent content) {
+        this.content = content;
     }
 }

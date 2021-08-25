@@ -1,6 +1,8 @@
 package rpc.rpcPackage;
 
-public class MyHeader {
+import java.io.Serializable;
+
+public class MyHeader  implements Serializable {
 
     int flag;  //32bit可以设置很多信息。。。
     long requestID;

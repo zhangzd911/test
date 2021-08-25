@@ -1,6 +1,8 @@
 package rpc.rpcPackage;
 
-public class MyContent {
+import java.io.Serializable;
+
+public class MyContent  implements Serializable {
 
     String name;
     String methodName;

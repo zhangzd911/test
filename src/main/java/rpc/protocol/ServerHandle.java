@@ -15,9 +15,9 @@ public class ServerHandle extends ChannelInboundHandlerAdapter{
         System.out.println("接收到客户端信息:" + request.toString());
         //返回的数据结构
         RpcResponse response = new RpcResponse();
-        response.setId(UUID.randomUUID().toString());
+        /*response.setId(UUID.randomUUID().toString());
         response.setData("server响应结果");
-        response.setStatus(1);
+        response.setStatus(1);*/
         ctx.writeAndFlush(response);
     }
 

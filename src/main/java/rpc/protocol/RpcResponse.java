@@ -5,12 +5,14 @@ package rpc.protocol;
  * 传输响应对象
  */
 
+import rpc.rpcPackage.MyContent;
+import rpc.rpcPackage.MyHeader;
+
 public class RpcResponse {
 
     private String id;
-    private Object data;
-    // 0=success -1=fail
-    private int status;
+    private MyHeader header;
+    private MyContent content;
 
     public String getId() {
         return id;
@@ -20,24 +22,20 @@ public class RpcResponse {
         this.id = id;
     }
 
-    public Object getData() {
-        return data;
+    public MyHeader getHeader() {
+        return header;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setHeader(MyHeader header) {
+        this.header = header;
     }
 
-    public int getStatus() {
-        return status;
+    public MyContent getContent() {
+        return content;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setContent(MyContent content) {
+        this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return "RpcResponse{" + "id='" + id + '\'' + ", data=" + data + ", status=" + status + '}';
-    }
 }
