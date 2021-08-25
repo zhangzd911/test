@@ -42,37 +42,7 @@ public class RpcTest {
 
     @Test
     public void registr(){
-        NioEventLoopGroup boss = new NioEventLoopGroup(1);
-        NioEventLoopGroup worker = boss;
-        ServerBootstrap sbs = new ServerBootstrap();
 
-        ChannelFuture bind = sbs.group(boss, worker)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
-                    @Override
-                    protected void initChannel(NioSocketChannel ch) throws Exception {
-                        System.out.println("server accept cliet port: " + ch.remoteAddress().getPort());
-
-                        ChannelPipeline p  = ch.pipeline();
-
-                        p.addLast(new HttpServerCodec())
-                                .addLast(new HttpObjectAggregator(1024*512))
-                                .addLast(new ChannelInboundHandlerAdapter(){
-                                    @Override
-                                    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                        //http 协议 ,  这个msg是一个啥：完整的http-request
-                                        FullHttpRequest request = (FullHttpRequest) msg;
-                                        System.out.println(request.toString());  //因为现在sonsumer使用的是一个现成的URL
-
-                                    }
-                                });
-                    }
-                }).bind(new InetSocketAddress("localhost", 9090));
-        try {
-            bind.sync().channel().closeFuture().sync();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }
