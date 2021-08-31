@@ -4,6 +4,11 @@ import rpc.protocol.RpcRequest;
 import rpc.protocol.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import rpc.proxy.MyProxy;
+import rpc.rpcPackage.MyContent;
+import rpc.rpcPackage.MyHeader;
+import rpc.service.Car;
+
 import java.util.UUID;
 
 public class ServerHandle extends ChannelInboundHandlerAdapter{
@@ -13,11 +18,26 @@ public class ServerHandle extends ChannelInboundHandlerAdapter{
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcRequest request = (RpcRequest) msg;
         System.out.println("接收到客户端信息:" + request.toString());
+
+
+        //对请求头校验等
+        MyContent myContent = request.getContent();
+
+        Object o = MyProxy.proxyGet(Class.forName(myContent.getName()));
+
+        long requestID = request.getHeader().getRequestID();
+
+
         //返回的数据结构
         RpcResponse response = new RpcResponse();
-        /*response.setId(UUID.randomUUID().toString());
-        response.setData("server响应结果");
-        response.setStatus(1);*/
+        MyHeader resHeader = new MyHeader();
+        resHeader.setFlag(2);
+        resHeader.setRequestID(requestID);
+        resHeader.setDataLen(1234);
+        myContent.setRes(o);
+        response.setHeader(resHeader);
+        response.setContent(myContent);
+
         ctx.writeAndFlush(response);
     }
 

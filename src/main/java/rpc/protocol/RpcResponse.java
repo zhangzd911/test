@@ -14,6 +14,7 @@ public class RpcResponse {
     private MyHeader header;
     private MyContent content;
 
+
     public String getId() {
         return id;
     }

@@ -9,4 +9,9 @@ public class MyCar implements Car {
     public String ooxx(String id) {
         return id + " 是法拉利";
     }
+
+    @Override
+    public String xxoo(String id) {
+        return null;
+    }
 }

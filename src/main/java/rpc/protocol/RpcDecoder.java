@@ -6,6 +6,7 @@ package rpc.protocol;
  */
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -36,6 +37,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         in.readBytes(data);
 
         Object obj = JSON.parseObject(data, target); //将byte数据转化为我们需要的对象
+        System.out.println("接受数据：" + JSONObject.toJSONString(obj));
         out.add(obj);
     }
 }

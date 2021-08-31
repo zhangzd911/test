@@ -12,6 +12,7 @@ import org.junit.Test;
 import rpc.protocol.NettyClient;
 import rpc.protocol.NettyServer;
 import rpc.protocol.RpcRequest;
+import rpc.proxy.MyProxy;
 import rpc.rpcPackage.MyContent;
 import rpc.rpcPackage.MyHeader;
 import rpc.service.Car;
@@ -28,13 +29,24 @@ public class RpcTest {
 
 
 
+
     /**
      * 服务提供方
      */
     @Test
     public void provider() throws IOException {
+        //本地方法注册
         Dispatcher dispatcher = Dispatcher.getDispatcher();
         dispatcher.register(Car.class.getName(), new MyCar());
+
+
+        //启动netty
+        NettyServer server = new NettyServer();
+        try {
+            server.bind(9991);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -42,44 +54,20 @@ public class RpcTest {
     @Test
     public void consumer() throws IOException {
 
-        NettyClient client = new NettyClient("localhost", 9991);
-        try {
-            client.start();
-            Channel channel = client.getChannel();
+        /*NettyClient client = new NettyClient("localhost", 9991);*/
+        Car car = MyProxy.proxyGet(Car.class);
+        car.ooxx("123");
 
+        System.in.read();
 
-            RpcRequest request = new RpcRequest();
-            MyHeader myHeader = new MyHeader();
-            myHeader.setFlag(1);
-            myHeader.setDataLen(1);
-            myHeader.setRequestID(20210825L);
-            MyContent myContent = new MyContent();
-            myContent.setArgs(new Object[1]);
-            myContent.setName("123");
-            myContent.setMethodName("456");
-            myContent.setParameterTypes(new Class[3]);
-            myContent.setArgs(new Class[3]);
-            request.setId("123456");
-            request.setContent(myContent);
-            request.setHeader(myHeader);
-
-            channel.writeAndFlush(request);
-            System.in.read();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
-    @Test
-    public void registr(){
-
-        NettyServer server = new NettyServer();
-        try {
-            server.bind(9991);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        /*Dispatcher dispatcher = Dispatcher.getDispatcher();
+        dispatcher.register(Car.class.getName(), new MyCar());*/
+        Car car = MyProxy.proxyGet(Car.class);
+        car.ooxx("123");
     }
 
 }
